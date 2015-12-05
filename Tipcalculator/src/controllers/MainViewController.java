@@ -12,7 +12,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import tipcalculator.TipCalculator;
 import utils.CalculatorUtils;
+import utils.ConversionUtils;
+import validator.DoubleValidator;
 
 /**
  *
@@ -39,18 +42,17 @@ public class MainViewController implements Initializable
     @FXML
     private Label tipRateInvalid;
     
-    private String billAmount;
-    private String tipRate;
-    
     private ChangeListener<String> amountFieldListener;
     private ChangeListener<String> tipRateFieldListener;
+    
+    private final TipCalculator calculator = new TipCalculator(0.0, 0.0);
             
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {        
         createAndRegisterListenerForBillAmount();        
         createAndRegisterTipRateListener(); 
-    }      
+    }  
 
     private void createAndRegisterTipRateListener() {
         tipRateFieldListener = (observable, oldValue, newValue) ->
@@ -58,51 +60,75 @@ public class MainViewController implements Initializable
         if ( (newValue != null) && (!newValue.isEmpty()) )
             {
                 try {
-                    tipRate = String.valueOf(CalculatorUtils.convertTipRateToNumber(newValue));                    
-                    tipRateInvalid.setVisible(false);
-                    tipRateInvalid.setText("");
+                    updateTipRate(newValue);                                        
                     updateTipAndTotal();
                 } catch (NumberFormatException numEx) {
-                    tipRateInvalid.setText(numEx.getMessage());
-                    tipRateInvalid.setVisible(true);
+                    showTipRateErrorField(numEx);
                 } catch (IllegalArgumentException illegalEx) {
-                    tipRateInvalid.setText(illegalEx.getMessage());
-                    tipRateInvalid.setVisible(true);
+                    showTipRateErrorField(illegalEx);
                 }
             }            
         };        
         tipRateField.textProperty().addListener(tipRateFieldListener);
     }      
 
+    private void showTipRateErrorField(Exception ex) {
+        tipRateInvalid.setText(ex.getMessage());
+        tipRateInvalid.setVisible(true);
+    }
+
+    private void hideTipRateErrorField() {
+        tipRateInvalid.setVisible(false);
+        tipRateInvalid.setText("");
+    }
+
+    private void updateTipRate(String newValue) throws NumberFormatException {
+        double newTipRate = ConversionUtils.safeConvertToDouble(newValue);
+        calculator.updateTipRate(newTipRate);
+        hideTipRateErrorField();
+    }
+
     private void createAndRegisterListenerForBillAmount() {
         amountFieldListener = (observable, oldValue, newValue) ->
         {
             if ( (newValue != null) && (!newValue.isEmpty()) )
             {
-                try {
-                    billAmount = String.valueOf(CalculatorUtils.convertBillAmountToNumber(newValue));
-                    billAmountInvalid.setVisible(false);
-                    billAmountInvalid.setText("");
-                    updateTipAndTotal();                    
+                try {                
+                    double newBillAmount = ConversionUtils.safeConvertToDouble(newValue);
+                    if (DoubleValidator.validate(newBillAmount))
+                        updateBillAmount(newValue);
+                    updateTipAndTotal();
                 } catch (NumberFormatException numEx) {
-                    billAmountInvalid.setText(numEx.getMessage());
-                    billAmountInvalid.setVisible(true);
+                    showBillAmountErrorField(numEx);
                 } catch (IllegalArgumentException illegalEx) {
-                    billAmountInvalid.setText(illegalEx.getMessage());
-                    billAmountInvalid.setVisible(true);
+                    showBillAmountErrorField(illegalEx);
                 }
             }
         };        
         billAmountField.textProperty().addListener(amountFieldListener);
+    }        
+
+    private void showBillAmountErrorField(Exception ex) 
+    {
+        billAmountInvalid.setText(ex.getMessage());
+        billAmountInvalid.setVisible(true);
     }
 
-    private void updateTipAndTotal() throws NumberFormatException {
-        if (billAmount != null && tipRate != null)
-        {
-            tipField.textProperty().setValue(String.valueOf(CalculatorUtils.determineTip(billAmount, tipRate)));
-            totalField.textProperty().setValue(String.valueOf(
-                    CalculatorUtils.calculateTotal(billAmount, String.valueOf(CalculatorUtils.determineTip(billAmount, tipRate)))));
-        }
-    }        
+    private void updateBillAmount(String newValue) throws NumberFormatException 
+    {
+        calculator.updateBillAmount(ConversionUtils.safeConvertToDouble(newValue));
+        hideBillAmountErrorField();
+    }
+
+    private void hideBillAmountErrorField()
+    {
+        billAmountInvalid.setVisible(false);
+        billAmountInvalid.setText("");
+    }
     
+    private void updateTipAndTotal()
+    {
+        totalField.setText(String.valueOf(calculator.calculateTotal()));
+        tipField.setText(String.valueOf(calculator.calculateTip()));
+    }
 }

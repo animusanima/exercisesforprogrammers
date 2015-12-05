@@ -5,20 +5,24 @@
  */
 package suites;
 
+import calculator.TipCalculatorTest;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import utils.UtilsTest;
+import utils.CalculatorUtilsTest;
+import utils.ConversionUtilsTest;
+import validator.ValidatorTest;
 
 /**
  *
  * @author animusanima
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({UtilsTest.class})
+@Suite.SuiteClasses({TipCalculatorTest.class, CalculatorUtilsTest.class, 
+    ConversionUtilsTest.class, ValidatorTest.class})
 public class CalculatorTestSuite {
 
     @BeforeClass

@@ -3,10 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Development/Java%20Development/Tipcalculator/test/utils/UtilsTest.java</file>
-            <file>file:/D:/Development/Java%20Development/Tipcalculator/src/application/TipcalculatorApp.java</file>
-            <file>file:/D:/Development/Java%20Development/Tipcalculator/src/utils/CalculatorUtils.java</file>
-            <file>file:/D:/Development/Java%20Development/Tipcalculator/src/controllers/MainViewController.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/src/tipcalculator/TipCalculator.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/test/calculator/TipCalculatorTest.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/test/suites/CalculatorTestSuite.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/src/validator/DoubleValidator.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/src/controllers/MainViewController.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/test/utils/ConversionUtilsTest.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/src/utils/ConversionUtils.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/test/validator/ValidatorTest.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/src/utils/CalculatorUtils.java</file>
+            <file>file:/D:/Development/Java%20Development/exercisesforprogrammers/Tipcalculator/test/utils/CalculatorUtilsTest.java</file>
         </group>
     </open-files>
 </project-private>
