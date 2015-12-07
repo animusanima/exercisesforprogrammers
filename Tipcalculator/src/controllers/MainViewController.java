@@ -60,19 +60,24 @@ public class MainViewController implements Initializable
         if ( (newValue != null) && (!newValue.isEmpty()) )
             {
                 try {
-                    updateTipRate(newValue);                                        
-                    updateTipAndTotal();
+                    double newTipRate = ConversionUtils.safeConvertToDouble(newValue);
+                    if (DoubleValidator.validate(newTipRate))
+                    {
+                        updateTipRate(newValue);                                        
+                        hideTipRateErrorField();
+                        updateTipAndTotal();
+                    }                    
                 } catch (NumberFormatException numEx) {
-                    showTipRateErrorField(numEx);
+                    showTipRateErrorForExceptionType(numEx);
                 } catch (IllegalArgumentException illegalEx) {
-                    showTipRateErrorField(illegalEx);
+                    showTipRateErrorForExceptionType(illegalEx);
                 }
             }            
         };        
         tipRateField.textProperty().addListener(tipRateFieldListener);
     }      
 
-    private void showTipRateErrorField(Exception ex) {
+    private void showTipRateErrorForExceptionType(Exception ex) {
         tipRateInvalid.setText(ex.getMessage());
         tipRateInvalid.setVisible(true);
     }
@@ -84,8 +89,7 @@ public class MainViewController implements Initializable
 
     private void updateTipRate(String newValue) throws NumberFormatException {
         double newTipRate = ConversionUtils.safeConvertToDouble(newValue);
-        calculator.updateTipRate(newTipRate);
-        hideTipRateErrorField();
+        calculator.updateTipRate(newTipRate);        
     }
 
     private void createAndRegisterListenerForBillAmount() {
@@ -96,19 +100,22 @@ public class MainViewController implements Initializable
                 try {                
                     double newBillAmount = ConversionUtils.safeConvertToDouble(newValue);
                     if (DoubleValidator.validate(newBillAmount))
+                    {                        
                         updateBillAmount(newValue);
-                    updateTipAndTotal();
+                        hideBillAmountErrorField();
+                        updateTipAndTotal();
+                    }
                 } catch (NumberFormatException numEx) {
-                    showBillAmountErrorField(numEx);
+                    showBillAmountErrorForExceptionType(numEx);
                 } catch (IllegalArgumentException illegalEx) {
-                    showBillAmountErrorField(illegalEx);
+                    showBillAmountErrorForExceptionType(illegalEx);
                 }
             }
         };        
         billAmountField.textProperty().addListener(amountFieldListener);
     }        
 
-    private void showBillAmountErrorField(Exception ex) 
+    private void showBillAmountErrorForExceptionType(Exception ex) 
     {
         billAmountInvalid.setText(ex.getMessage());
         billAmountInvalid.setVisible(true);
@@ -116,8 +123,7 @@ public class MainViewController implements Initializable
 
     private void updateBillAmount(String newValue) throws NumberFormatException 
     {
-        calculator.updateBillAmount(ConversionUtils.safeConvertToDouble(newValue));
-        hideBillAmountErrorField();
+        calculator.updateBillAmount(ConversionUtils.safeConvertToDouble(newValue));        
     }
 
     private void hideBillAmountErrorField()
@@ -127,8 +133,10 @@ public class MainViewController implements Initializable
     }
     
     private void updateTipAndTotal()
-    {
-        totalField.setText(String.valueOf(calculator.calculateTotal()));
-        tipField.setText(String.valueOf(calculator.calculateTip()));
+    {        
+        double roundedTotal = CalculatorUtils.roundToNearestCent(calculator.calculateTotal());        
+        totalField.setText(String.valueOf(roundedTotal));
+        double roundedTip = CalculatorUtils.roundToNearestCent(calculator.calculateTip());
+        tipField.setText(String.valueOf(roundedTip));
     }
 }

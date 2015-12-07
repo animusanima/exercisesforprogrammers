@@ -5,6 +5,9 @@
  */
 package utils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * roundHelper.setScale(2, RoundingMode.HALF_UP);
  * 
@@ -12,7 +15,7 @@ package utils;
  */
 public final class CalculatorUtils 
 {    
-
+    private static BigDecimal roundingHelper;
     public static double calculateTip(double billAmount, double rate) 
     {
         return billAmount * calculateTipRate(rate);
@@ -26,5 +29,12 @@ public final class CalculatorUtils
     public static double calculateTipRate(double percentageRate)
     {
         return ConversionUtils.convertTipRateToDouble(percentageRate);
+    }
+    
+    public static double roundToNearestCent(double value)
+    {
+        roundingHelper = BigDecimal.valueOf(value);
+        roundingHelper = roundingHelper.setScale(2, RoundingMode.HALF_UP);
+        return roundingHelper.doubleValue();
     }
 }
