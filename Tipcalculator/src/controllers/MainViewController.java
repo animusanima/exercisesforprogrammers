@@ -42,7 +42,7 @@ public class MainViewController implements Initializable
     @FXML
     private Label tipRateInvalid;
     
-    private ChangeListener<String> amountFieldListener;
+    private ChangeListener<String> billAmountFieldListener;
     private ChangeListener<String> tipRateFieldListener;
     
     private final TipCalculator calculator = new TipCalculator(0.0, 0.0);
@@ -53,83 +53,79 @@ public class MainViewController implements Initializable
         createAndRegisterListenerForBillAmount();        
         createAndRegisterTipRateListener(); 
     }  
-
-    private void createAndRegisterTipRateListener() {
-        tipRateFieldListener = (observable, oldValue, newValue) ->
-        {   
-        if ( (newValue != null) && (!newValue.isEmpty()) )
-            {
-                try {
-                    double newTipRate = ConversionUtils.safeConvertToDouble(newValue);
-                    if (DoubleValidator.validate(newTipRate))
-                    {
-                        updateTipRate(newValue);                                        
-                        hideTipRateErrorField();
-                        updateTipAndTotal();
-                    }                    
-                } catch (NumberFormatException numEx) {
-                    showTipRateErrorForExceptionType(numEx);
-                } catch (IllegalArgumentException illegalEx) {
-                    showTipRateErrorForExceptionType(illegalEx);
-                }
-            }            
-        };        
-        tipRateField.textProperty().addListener(tipRateFieldListener);
-    }      
-
-    private void showTipRateErrorForExceptionType(Exception ex) {
-        tipRateInvalid.setText(ex.getMessage());
-        tipRateInvalid.setVisible(true);
-    }
-
-    private void hideTipRateErrorField() {
-        tipRateInvalid.setVisible(false);
-        tipRateInvalid.setText("");
-    }
-
-    private void updateTipRate(String newValue) throws NumberFormatException {
-        double newTipRate = ConversionUtils.safeConvertToDouble(newValue);
-        calculator.updateTipRate(newTipRate);        
-    }
-
+    
     private void createAndRegisterListenerForBillAmount() {
-        amountFieldListener = (observable, oldValue, newValue) ->
+        billAmountFieldListener = (observable, oldValue, newValue) ->
         {
             if ( (newValue != null) && (!newValue.isEmpty()) )
             {
                 try {                
-                    double newBillAmount = ConversionUtils.safeConvertToDouble(newValue);
+                    double newBillAmount = ConversionUtils.convertToDouble(newValue);
                     if (DoubleValidator.validate(newBillAmount))
                     {                        
                         updateBillAmount(newValue);
                         hideBillAmountErrorField();
                         updateTipAndTotal();
                     }
-                } catch (NumberFormatException numEx) {
-                    showBillAmountErrorForExceptionType(numEx);
-                } catch (IllegalArgumentException illegalEx) {
-                    showBillAmountErrorForExceptionType(illegalEx);
+                } catch (Exception ex) {
+                    showBillAmountError(ex.getMessage());
                 }
             }
         };        
-        billAmountField.textProperty().addListener(amountFieldListener);
-    }        
-
-    private void showBillAmountErrorForExceptionType(Exception ex) 
-    {
-        billAmountInvalid.setText(ex.getMessage());
-        billAmountInvalid.setVisible(true);
-    }
+        billAmountField.textProperty().addListener(billAmountFieldListener);
+    }      
 
     private void updateBillAmount(String newValue) throws NumberFormatException 
     {
-        calculator.updateBillAmount(ConversionUtils.safeConvertToDouble(newValue));        
-    }
+        calculator.updateBillAmount(ConversionUtils.convertToDouble(newValue));        
+    }    
 
     private void hideBillAmountErrorField()
     {
         billAmountInvalid.setVisible(false);
         billAmountInvalid.setText("");
+    }    
+    
+    private void showBillAmountError(String message) 
+    {
+        billAmountInvalid.setText(message);
+        billAmountInvalid.setVisible(true);
+    }    
+
+    private void createAndRegisterTipRateListener() {
+        tipRateFieldListener = (observable, oldValue, newValue) ->
+        {   
+            if ( (newValue != null) && (!newValue.isEmpty()) )
+            {
+                try {
+                    double newTipRate = ConversionUtils.convertToDouble(newValue);
+                    if (DoubleValidator.validate(newTipRate))
+                    {
+                        updateTipRate(newValue);                                        
+                        hideTipRateErrorField();
+                        updateTipAndTotal();
+                    }                    
+                } catch (Exception ex) {
+                    showTipRateError(ex.getMessage());
+                }
+            }
+        };        
+        tipRateField.textProperty().addListener(tipRateFieldListener);
+    }   
+
+    private void updateTipRate(String newValue) throws NumberFormatException {
+        double newTipRate = ConversionUtils.convertToDouble(newValue);
+        calculator.updateTipRate(newTipRate);        
+    }        
+
+    private void hideTipRateErrorField() {
+        tipRateInvalid.setVisible(false);
+        tipRateInvalid.setText("");
+    }    
+
+    private void showTipRateError(String message) {
+        tipRateInvalid.setText(message);
+        tipRateInvalid.setVisible(true);
     }
     
     private void updateTipAndTotal()

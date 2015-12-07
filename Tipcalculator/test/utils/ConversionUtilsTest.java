@@ -47,24 +47,14 @@ public class ConversionUtilsTest
     @Test
     public void canConvertStringToDouble()
     {
-        double result = ConversionUtils.safeConvertToDouble(TEN_EURO);
+        double result = ConversionUtils.convertToDouble(TEN_EURO);
         assertThat(result, is(10.0));
     }
     
     @Test(expected = NumberFormatException.class)
     public void noneNumberStringThrowsNumberFormatException()
     {
-        double result = ConversionUtils.safeConvertToDouble(NONE_NUMBER);
-    }
-    
-    @Test
-    public void nullAndEmptyStringReturnsZero()
-    {
-        double result = ConversionUtils.safeConvertToDouble(null);
-        assertThat(result, is(0.0));
-        
-        result = ConversionUtils.safeConvertToDouble("");
-        assertThat(result, is(0.0));
+        double result = ConversionUtils.convertToDouble(NONE_NUMBER);
     }
 
 }
