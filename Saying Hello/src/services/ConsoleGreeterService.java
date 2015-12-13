@@ -1,7 +1,6 @@
 package services;
 
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  *
@@ -22,12 +21,12 @@ public final class ConsoleGreeterService
         return GREETINGS.size();
     }
     
-    public static String getGreetingForName(String name)
+    public static String getGreetingByName(String name)
     {
         return GREETINGS.get(name);
     }
     
-    public static void clearAllGreetings()
+    public static void reset()
     {
         GREETINGS.clear();
     }

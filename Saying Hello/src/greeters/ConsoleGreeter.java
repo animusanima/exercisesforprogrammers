@@ -10,7 +10,7 @@ public final class ConsoleGreeter
 {
     public static void greet(String name)
     {
-        System.out.println(String.format(ConsoleGreeterService.getGreetingForName(name), name));
+        System.out.println(String.format(ConsoleGreeterService.getGreetingByName(name), name));
     }
     
     public static void promptForName()

@@ -45,23 +45,23 @@ public class ConsoleGreeterServiceTest {
     public void canGetGreetingForName()
     {
         ConsoleGreeterService.addGreeting("Joe", "Hello %s, nice to meet you!");
-        String greet = ConsoleGreeterService.getGreetingForName("Joe");
+        String greet = ConsoleGreeterService.getGreetingByName("Joe");
         assertNotNull(greet);                
     }
     
     @Test
     public void canClearGreetings()
     {
-        ConsoleGreeterService.clearAllGreetings();
+        ConsoleGreeterService.reset();
         assertThat(ConsoleGreeterService.numberOfGreetings(), is(0));
     }
     
     @Test
     public void singleGreetingCorrectlyReturnedByGetRandomGreeting()
     {   
-        ConsoleGreeterService.clearAllGreetings();
+        ConsoleGreeterService.reset();
         ConsoleGreeterService.addGreeting("Joe", "Hello %s, nice to meet you!");
-        String greet = ConsoleGreeterService.getGreetingForName("Joe");
+        String greet = ConsoleGreeterService.getGreetingByName("Joe");
         assertThat("Hello %s, nice to meet you!", is(greet));
     }
     
