@@ -75,5 +75,4 @@ public class CharacterCounterTest
         int result = CharacterCounter.lengthOf(input);
         assertThat(result, is(expectedLength));
     }
-
 }

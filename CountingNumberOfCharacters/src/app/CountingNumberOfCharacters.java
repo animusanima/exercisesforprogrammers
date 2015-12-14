@@ -19,7 +19,7 @@ public class CountingNumberOfCharacters extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainVIew.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/MainVIew.fxml"));
         
         Scene scene = new Scene(root);
         

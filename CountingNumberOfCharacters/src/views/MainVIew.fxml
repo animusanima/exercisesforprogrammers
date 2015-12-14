@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="91.0" prefWidth="270.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40" fx:controller="controller.MainVIewController">
+   <children>
+      <Label fx:id="wordLengthLabel" layoutX="14.0" layoutY="54.0" text="The word is 0 characters long.">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="wordField" layoutX="14.0" layoutY="14.0" minWidth="240.0" promptText="Enter word to see its length" />
+   </children>
+</AnchorPane>

@@ -8,13 +8,15 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import tests.CharacterCounterTest;
 import tests.ValidationTest;
+import tests.WordLengthTest;
 
 /**
  *
  * @author animusanima
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ValidationTest.class, CharacterCounterTest.class})
+@Suite.SuiteClasses({ValidationTest.class, CharacterCounterTest.class,
+    WordLengthTest.class})
 public class CountingNumbersSuite {
 
     @BeforeClass
