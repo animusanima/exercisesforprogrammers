@@ -32,7 +32,7 @@ public class MainVIewController implements Initializable
                         if (InputValidator.validate(newValue))
                             wordLengthLabel.setText(WordLengthFormatter.format(newValue));
                     } catch (IllegalArgumentException argEx) {
-                        wordLengthLabel.setText("The word is 0 character long.");
+                        wordLengthLabel.setText("Please enter a word to see its length.");
                     }
                         
                 }
