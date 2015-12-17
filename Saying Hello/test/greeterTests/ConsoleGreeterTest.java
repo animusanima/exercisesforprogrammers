@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.is;
+import services.ConsoleGreeterService;
 
 /**
  *
@@ -42,6 +43,7 @@ public class ConsoleGreeterTest
     @Test
     public void nameWillBeUsedForGreeting() 
     {
+        ConsoleGreeterService.addGreeting("Joe", "Hello Joe, nice to meet you.");
         ConsoleGreeter.greet("Joe");
         assertThat("Hello Joe, nice to meet you.\r\n", is(outContent.toString()));
     }
