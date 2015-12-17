@@ -10,4 +10,8 @@ public final class ConsolePrompter
     {
         System.out.print("What is the quote? ");
     }
+
+    public static void askForAuthor() {
+        System.out.print("Who said it? ");
+    }
 }

@@ -8,6 +8,6 @@ public final class ConsoleQuoteWriter
 {
     public static String format(String author, String quote)
     {
-        return author + " says: " + "\"" + quote + "\"";        
+        return author + " says, " + "\"" + quote + "\"";        
     }
 }

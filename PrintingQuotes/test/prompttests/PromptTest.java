@@ -5,11 +5,8 @@
  */
 package prompttests;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -57,7 +54,18 @@ public class PromptTest
     public void askTheUserForAQuote()
     {        
         ConsolePrompter.askForQuote();
-        assertThat(QUOTE_PROMPT_MESSAGE, is(outContent.toString()));
+        assertThat(QUOTE_PROMPT_MESSAGE, is(getConsoleOutput()));
     }    
+    
+    @Test
+    public void askTheUserForAuthor()
+    {
+        ConsolePrompter.askForAuthor();
+        assertThat("Who said it? ", is(getConsoleOutput()));
+    }
+    
+    private String getConsoleOutput() {
+        return outContent.toString();
+    }
     
 }

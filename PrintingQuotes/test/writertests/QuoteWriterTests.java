@@ -46,7 +46,7 @@ public class QuoteWriterTests {
         String author = "Obi-Wan Kenobi";
         
         String output = ConsoleQuoteWriter.format(author, quote);        
-        assertThat(output, is(author + " says: " + "\"" + quote + "\""));
+        assertThat(output, is(author + " says, " + "\"" + quote + "\""));
     }
     
 }

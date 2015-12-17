@@ -7,6 +7,7 @@ package app;
 
 import java.util.Scanner;
 import prompter.ConsolePrompter;
+import writer.ConsoleQuoteWriter;
 
 /**
  *
@@ -23,7 +24,11 @@ public class PrintingQuotes {
         Scanner in = new Scanner(System.in);
         String quote = in.nextLine();
         
+        ConsolePrompter.askForAuthor();
+        String author = in.nextLine();
         
+        String quoteAndAuthor = ConsoleQuoteWriter.format(author, quote);
+        System.out.println(quoteAndAuthor);
     }
     
 }
