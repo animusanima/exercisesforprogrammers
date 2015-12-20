@@ -1,6 +1,6 @@
 # README #
 
-All programs in this repository don't need special files or settings. They are all solved with basic Java syntax.
+All programs in repository use basic Java language features. 
 
 ### What is this repository for? ###
 
