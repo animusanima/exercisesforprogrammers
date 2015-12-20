@@ -1,0 +1,16 @@
+Mad Lib
+
+Task:
+
+Create a simple mad lib program that prompts for a noun, a verb, an adverb and an adjective.
+Inject those into a story that you create.
+
+Contraints:
+
+Use a single output statement for this program
+if your language supports string interpolation or string substitution use it to build the output.
+
+Challenges:
+
+Add more inputs to the program to expand the story.
+Implement a branching story, where the answers to questions determine how the story is constructed.
