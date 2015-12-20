@@ -7,7 +7,6 @@ package readerTests;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.Scanner;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import reader.ConsoleReader;
+import testConstants.TestConstants;
 
 /**
  *
@@ -24,8 +24,6 @@ import reader.ConsoleReader;
 public class InputReaderTest 
 {    
     private InputStream savedSystemIn;
-    
-    private final String ADJECTIVE = "beautiful";
     
     public InputReaderTest() {
     }
@@ -46,22 +44,34 @@ public class InputReaderTest
     @After
     public void tearDown() {
         System.setIn(savedSystemIn);
+    }    
+    
+    @Test
+    public void canReadNounFromConsole()
+    {
+        WriteToConsole(TestConstants.NOUN);
+        assertThat(ConsoleReader.readInput(), is(TestConstants.NOUN));
     }
     
     @Test
-    public void canSimulateInputFromUser()
+    public void canReadVerbFromConsole()
     {
-        WriteToConsole(ADJECTIVE);
-        String userInput = ConsoleReader.readInput();
-        assertThat(ADJECTIVE, is(userInput));
+        WriteToConsole(TestConstants.VERB);
+        assertThat(ConsoleReader.readInput(), is(TestConstants.VERB));
+    }
+
+    @Test
+    public void canReadAdverbFromConsole()
+    {
+        WriteToConsole(TestConstants.ADVERB);
+        assertThat(ConsoleReader.readInput(), is((TestConstants.ADVERB)));
     }
     
     @Test
-    public void canReadInputThroughtConsoleReader()
+    public void canReadAdjectiveFromConsole()
     {
-        WriteToConsole(ADJECTIVE);
-        String userInput = ConsoleReader.readInput();
-        assertThat(userInput, is(ADJECTIVE));
+        WriteToConsole(TestConstants.ADJECTIVE);
+        assertThat(ConsoleReader.readInput(), is(TestConstants.ADJECTIVE));
     }
 
     private void WriteToConsole(String data) {
