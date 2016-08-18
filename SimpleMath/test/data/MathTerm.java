@@ -9,13 +9,13 @@ package data;
  *
  * @author animusanima
  */
-public class MathOperationResult 
+public class MathTerm 
 {
     private final int number_one;
     private final int number_two;
     private final int expected;
     
-    public MathOperationResult(int a, int b, int expected) {
+    public MathTerm(int a, int b, int expected) {
         this.number_one = a;
         this.number_two = b;
         this.expected = expected;

@@ -11,13 +11,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+import tests.ArithmeticTests;
 
 /**
  *
  * @author animusanima
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({})
+@Suite.SuiteClasses({ArithmeticTests.class})
 public class MathTests {
 
     @BeforeClass
@@ -29,7 +30,8 @@ public class MathTests {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws Exception 
+    {        
     }
 
     @After

@@ -11,9 +11,9 @@ import interfaces.MathOperation;
  *
  * @author animusanima
  */
-public class Calculator 
+public class Calculator
 {    
-    public int operate(int a, int b, MathOperation operation) {
+    public int compute(int a, int b, MathOperation operation) {
         return operation.compute(a, b);
     }
 }
