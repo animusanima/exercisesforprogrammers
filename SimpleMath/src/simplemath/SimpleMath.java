@@ -22,6 +22,7 @@ public class SimpleMath extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/views/MainView.fxml"));
         
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("/CSS/custom.css");
         
         stage.setScene(scene);
         stage.setTitle("Simple Math");
