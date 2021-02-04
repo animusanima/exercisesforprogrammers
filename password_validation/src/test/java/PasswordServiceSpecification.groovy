@@ -1,3 +1,4 @@
+import repositories.DemoDataCredentialRepository
 import services.LoginService
 import spock.lang.Shared
 import spock.lang.Specification
@@ -14,7 +15,8 @@ class PasswordServiceSpecification extends Specification {
 
     def "should compare password for given user to a known password" () {
         given:
-        service = new LoginService()
+        def validator = new PasswordValidator(new DemoDataCredentialRepository())
+        service = new LoginService(validator)
 
         when:
         def loginSuccessful = service.login("John", "Wick")
