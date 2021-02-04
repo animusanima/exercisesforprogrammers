@@ -1,0 +1,6 @@
+services\IPasswordService.class
+messages\LoginMessage.class
+application\PasswordValidationExample.class
+services\PasswordService.class
+validation\PasswordValidator.class
+validation\IPasswordValidator.class
