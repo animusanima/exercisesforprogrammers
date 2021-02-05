@@ -1,6 +1,7 @@
 package repositories;
 
 import crypto.CryptoService;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -25,11 +26,14 @@ public class CredentialRepository implements ICredentialRepository {
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             e.printStackTrace();
         }
+
+        addCredential("John", "Wick");
     }
 
     @Override
     public void addCredential(String username, String password) {
         try {
+            validateCredentials(username, password);
             credentials.put(username, crypto.encrypt(password));
         } catch (BadPaddingException | IllegalBlockSizeException | InvalidKeyException e) {
             e.printStackTrace();
@@ -38,7 +42,21 @@ public class CredentialRepository implements ICredentialRepository {
 
     @Override
     public boolean credentialValid(String username, String password) {
-        byte[] decryptedPassphrase = credentials.get(username);
-        return credentials.containsKey(username) && Arrays.equals(decryptedPassphrase, password.getBytes(StandardCharsets.UTF_8));
+        validateCredentials(username, password);
+        return (isUserNameValid(username) && isPasswordValid(username, password));
+    }
+
+    private void validateCredentials(String username, String password) {
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+            throw new IllegalArgumentException("Username or password need to be provided.");
+        }
+    }
+
+    private boolean isPasswordValid(String username, String password) {
+        return Arrays.equals(credentials.get(username), password.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private boolean isUserNameValid(String username) {
+        return credentials.containsKey(username);
     }
 }
