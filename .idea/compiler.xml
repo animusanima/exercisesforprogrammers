@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="password_validation" />
+        <module name="troubleshooting_car_issues" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="password_validation" target="1.8" />
+      <module name="troubleshooting_car_issues" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/Tipcalculator/Tipcalculator.iml" filepath="$PROJECT_DIR$/Tipcalculator/Tipcalculator.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/exercisesforprogrammers.iml" filepath="$PROJECT_DIR$/.idea/exercisesforprogrammers.iml" />
       <module fileurl="file://$PROJECT_DIR$/password_validation/password_validation.iml" filepath="$PROJECT_DIR$/password_validation/password_validation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/troubleshooting_car_issues/troubleshooting_car_issues.iml" filepath="$PROJECT_DIR$/troubleshooting_car_issues/troubleshooting_car_issues.iml" />
     </modules>
   </component>
 </project>
