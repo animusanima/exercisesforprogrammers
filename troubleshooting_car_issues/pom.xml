@@ -25,16 +25,9 @@
             <version>4.4</version>
         </dependency>
         <dependency>
-            <groupId>com.deliveredtechnologies</groupId>
-            <artifactId>rulebook-core</artifactId>
-            <version>0.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.oath.cyclops</groupId>
-            <artifactId>cyclops</artifactId>
-            <version>10.4.0</version>
-            <scope>test</scope>
+            <groupId>org.jeasy</groupId>
+            <artifactId>easy-rules-core</artifactId>
+            <version>4.1.0</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
