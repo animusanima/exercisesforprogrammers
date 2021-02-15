@@ -5,6 +5,8 @@
       <list>
         <option value="$PROJECT_DIR$/password_validation/pom.xml" />
         <option value="$PROJECT_DIR$/troubleshooting_car_issues/pom.xml" />
+        <option value="$PROJECT_DIR$/password_strength_indicator/pom.xml" />
+        <option value="$PROJECT_DIR$/password_generator/pom.xml" />
       </list>
     </option>
   </component>
