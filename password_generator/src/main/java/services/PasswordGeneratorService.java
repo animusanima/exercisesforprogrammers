@@ -12,11 +12,7 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
     private int numberOfSpecialCharacters;
     private int amountOfNumbers;
 
-    private final int SPECIAL_CHAR_CHARACTER_TYPE = 0;
-    private final int NUMBER_CHARACTER_TYPE = 1;
-    private final int NORMAL_CHARACTER_TYPE = 2;
-
-    private ICharacterGenerator generator;
+    private final ICharacterGenerator generator;
     private final Random RANDOMIZER = new Random();
 
     private List<Character> generatedCharacters;
