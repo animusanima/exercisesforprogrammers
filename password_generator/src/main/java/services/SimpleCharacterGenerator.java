@@ -2,6 +2,7 @@ package services;
 
 import utils.PasswordCharacterUtils;
 
+import java.util.List;
 import java.util.Random;
 
 public class SimpleCharacterGenerator implements ICharacterGenerator {

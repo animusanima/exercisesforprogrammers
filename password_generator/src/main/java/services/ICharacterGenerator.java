@@ -1,5 +1,7 @@
 package services;
 
+import java.util.List;
+
 public interface ICharacterGenerator {
     Character generateRandomNumber();
     Character generateRandomCharacter();
