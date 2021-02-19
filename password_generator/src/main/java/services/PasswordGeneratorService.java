@@ -43,24 +43,20 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
         StringBuilder builder = new StringBuilder();
         resetCharacterLists();
 
-        int wantedNumberOfCharacters = getDesiredPasswordLength();
-        while (wantedNumberOfCharacters > 0) {
+        while (!wantedNumberOfCharactersReached(builder)) {
             switch (getRandomCharacterType()) {
                 case SPECIAL_CHAR_CHARACTER_TYPE:
-                    if (canStillAddSpecialCharacters()) {
+                    if (canStillAddSpecialCharacters(generatedSpecialCharacters)) {
                         Character specialChar = generator.generateRandomSpecialCharacter();
                         while (isNotUnique(specialChar, generatedSpecialCharacters)) {
                             specialChar = generator.generateRandomSpecialCharacter();
                         }
                         generatedSpecialCharacters.add(specialChar);
-
                         builder.append(specialChar);
-                        numberOfSpecialCharacters--;
-                        wantedNumberOfCharacters--;
                     }
                     break;
                 case NUMBER_CHARACTER_TYPE:
-                    if (canStillAddNumbers()) {
+                    if (canStillAddNumbers(generatedNumbers)) {
                         Character numberChar = generator.generateRandomNumber();
                         while (isNotUnique(numberChar, generatedNumbers)) {
                             numberChar = generator.generateRandomNumber();
@@ -68,8 +64,6 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
                         generatedNumbers.add(numberChar);
 
                         builder.append(numberChar);
-                        amountOfNumbers--;
-                        wantedNumberOfCharacters--;
                     }
                     break;
                 case NORMAL_CHARACTER_TYPE:
@@ -80,12 +74,15 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
                     generatedCharacters.add(normalChar);
 
                     builder.append(normalChar);
-                    wantedNumberOfCharacters--;
 
                     break;
             }
         }
         return builder.toString();
+    }
+
+    private boolean wantedNumberOfCharactersReached(StringBuilder builder) {
+        return builder.length() == getDesiredPasswordLength();
     }
 
     private PasswordCharacterType getRandomCharacterType() {
@@ -108,12 +105,12 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
         generatedNumbers.clear();
     }
 
-    private boolean canStillAddNumbers() {
-        return amountOfNumbers > 0;
+    private boolean canStillAddNumbers(List<Character> generatedNumbers) {
+        return generatedNumbers.size() < amountOfNumbers;
     }
 
-    private boolean canStillAddSpecialCharacters() {
-        return numberOfSpecialCharacters > 0;
+    private boolean canStillAddSpecialCharacters(List<Character> generatedSpecialCharacters) {
+        return generatedSpecialCharacters.size() < numberOfSpecialCharacters;
     }
 
     @Override
