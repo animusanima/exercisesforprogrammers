@@ -1,23 +1,18 @@
 package services;
 
-import enums.PasswordCharacterType;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import utils.PasswordCharacterTypeRandomizer;
 
 public class PasswordGeneratorService implements IPasswordGeneratorService {
 
     private int desiredPasswordLength;
-    private int numberOfSpecialCharacters;
-    private int amountOfNumbers;
+    private int desiredAmountOfSpecialCharacters;
+    private int desiredAmountOfNumberCharacters;
 
     private final ICharacterGenerator generator;
-    private final Random RANDOMIZER = new Random();
 
-    private List<Character> generatedCharacters;
-    private List<Character> generatedSpecialCharacters;
-    private List<Character> generatedNumbers;
+    private ICharacterTracker specialCharacterTracker;
+    private ICharacterTracker numberCharacterTracker;
+    private ICharacterTracker normalCharacterTracker;
 
     public PasswordGeneratorService() {
         this(new SimpleCharacterGenerator());
@@ -26,91 +21,79 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
     public PasswordGeneratorService(ICharacterGenerator generator) {
         this.generator = generator;
         this.desiredPasswordLength = 0;
-        this.amountOfNumbers = 0;
-        this.numberOfSpecialCharacters = 0;
-
-        initialize();
+        this.desiredAmountOfNumberCharacters = 0;
+        this.desiredAmountOfSpecialCharacters = 0;
     }
 
-    private void initialize() {
-        generatedCharacters = new ArrayList<>();
-        generatedSpecialCharacters = new ArrayList<>();
-        generatedNumbers = new ArrayList<>();
+    private int calculateAmountOfNormalCharacters() {
+        return desiredPasswordLength - desiredAmountOfSpecialCharacters - desiredAmountOfNumberCharacters;
     }
 
     @Override
     public String generatePassword() {
-        StringBuilder builder = new StringBuilder();
-        resetCharacterLists();
+        return generateCharactersUntilDesiredPasswordLengthIsReached();
+    }
 
-        while (!wantedNumberOfCharactersReached(builder)) {
-            switch (getRandomCharacterType()) {
-                case SPECIAL_CHAR_CHARACTER_TYPE:
-                    if (canStillAddSpecialCharacters(generatedSpecialCharacters)) {
-                        Character specialChar = generator.generateRandomSpecialCharacter();
-                        while (isNotUnique(specialChar, generatedSpecialCharacters)) {
-                            specialChar = generator.generateRandomSpecialCharacter();
-                        }
-                        generatedSpecialCharacters.add(specialChar);
-                        builder.append(specialChar);
-                    }
+    private String generateCharactersUntilDesiredPasswordLengthIsReached() {
+        StringBuilder builder = new StringBuilder();
+        initializeCharacterTracker();
+        while (!desiredPasswordLengthReached(builder)) {
+            switch (PasswordCharacterTypeRandomizer.getRandomCharacterType()) {
+                case SPECIAL_CHARACTER_TYPE:
+                    generateUniqueSpecialCharacter(builder);
                     break;
                 case NUMBER_CHARACTER_TYPE:
-                    if (canStillAddNumbers(generatedNumbers)) {
-                        Character numberChar = generator.generateRandomNumber();
-                        while (isNotUnique(numberChar, generatedNumbers)) {
-                            numberChar = generator.generateRandomNumber();
-                        }
-                        generatedNumbers.add(numberChar);
-
-                        builder.append(numberChar);
-                    }
+                    generateUniqueNumberCharacter(builder);
                     break;
-                case NORMAL_CHARACTER_TYPE:
-                    Character normalChar = generator.generateRandomCharacter();
-                    while (isNotUnique(normalChar, generatedCharacters)) {
-                        normalChar = generator.generateRandomCharacter();
-                    }
-                    generatedCharacters.add(normalChar);
-
-                    builder.append(normalChar);
-
+                default:
+                    generateUniqueNormalCharacter(builder);
                     break;
             }
         }
         return builder.toString();
     }
 
-    private boolean wantedNumberOfCharactersReached(StringBuilder builder) {
-        return builder.length() == getDesiredPasswordLength();
-    }
-
-    private PasswordCharacterType getRandomCharacterType() {
-        int randomValue = RANDOMIZER.nextInt(3);
-        if (randomValue == PasswordCharacterType.SPECIAL_CHAR_CHARACTER_TYPE.ordinal()) {
-            return PasswordCharacterType.SPECIAL_CHAR_CHARACTER_TYPE;
-        } else if (randomValue == PasswordCharacterType.NUMBER_CHARACTER_TYPE.ordinal()) {
-            return PasswordCharacterType.NUMBER_CHARACTER_TYPE;
+    private void generateUniqueNormalCharacter(StringBuilder builder) {
+        if (normalCharacterTracker.canAddCharacter()) {
+            Character normalChar = generator.generateRandomCharacter();
+            while (normalCharacterTracker.characterAlreadyAdded(normalChar)) {
+                normalChar = generator.generateRandomCharacter();
+            }
+            normalCharacterTracker.trackCharacter(normalChar);
+            builder.append(normalCharacterTracker.getLastTrackedCharacter());
         }
-        return PasswordCharacterType.NORMAL_CHARACTER_TYPE;
     }
 
-    private boolean isNotUnique(Character character, List<Character> characterList) {
-        return characterList.contains(character);
+    private void generateUniqueSpecialCharacter(StringBuilder builder) {
+        if (specialCharacterTracker.canAddCharacter()) {
+            Character specialChar = generator.generateRandomSpecialCharacter();
+            while (specialCharacterTracker.characterAlreadyAdded(specialChar)) {
+                specialChar = generator.generateRandomSpecialCharacter();
+            }
+            specialCharacterTracker.trackCharacter(specialChar);
+            builder.append(specialCharacterTracker.getLastTrackedCharacter());
+        }
     }
 
-    private void resetCharacterLists() {
-        generatedCharacters.clear();
-        generatedSpecialCharacters.clear();
-        generatedNumbers.clear();
+    private void generateUniqueNumberCharacter(StringBuilder builder) {
+        if (numberCharacterTracker.canAddCharacter()) {
+            Character numberChar = generator.generateRandomNumber();
+            while (numberCharacterTracker.characterAlreadyAdded(numberChar)) {
+                numberChar = generator.generateRandomNumber();
+            }
+            numberCharacterTracker.trackCharacter(numberChar);
+            builder.append(numberCharacterTracker.getLastTrackedCharacter());
+        }
     }
 
-    private boolean canStillAddNumbers(List<Character> generatedNumbers) {
-        return generatedNumbers.size() < amountOfNumbers;
+    private void initializeCharacterTracker() {
+        specialCharacterTracker = new CharacterTracker(getDesiredAmountOfSpecialCharacters());
+        numberCharacterTracker = new CharacterTracker(getDesiredAmountOfNumberCharacters());
+        normalCharacterTracker = new CharacterTracker(calculateAmountOfNormalCharacters());
     }
 
-    private boolean canStillAddSpecialCharacters(List<Character> generatedSpecialCharacters) {
-        return generatedSpecialCharacters.size() < numberOfSpecialCharacters;
+    private boolean desiredPasswordLengthReached(StringBuilder builder) {
+        return builder.length() == getDesiredPasswordLength();
     }
 
     @Override
@@ -124,22 +107,22 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
     }
 
     @Override
-    public int getNumberOfSpecialCharacters() {
-        return numberOfSpecialCharacters;
+    public int getDesiredAmountOfSpecialCharacters() {
+        return desiredAmountOfSpecialCharacters;
     }
 
     @Override
-    public void setNumberOfSpecialCharacters(int numberOfSpecialCharacters) {
-        this.numberOfSpecialCharacters = numberOfSpecialCharacters;
+    public void setDesiredAmountOfSpecialCharacters(int desiredAmountOfSpecialCharacters) {
+        this.desiredAmountOfSpecialCharacters = desiredAmountOfSpecialCharacters;
     }
 
     @Override
-    public int getAmountOfNumbers() {
-        return amountOfNumbers;
+    public int getDesiredAmountOfNumberCharacters() {
+        return desiredAmountOfNumberCharacters;
     }
 
     @Override
-    public void setAmountOfNumbers(int amountOfNumbers) {
-        this.amountOfNumbers = amountOfNumbers;
+    public void setDesiredAmountOfNumberCharacters(int desiredAmountOfNumberCharacters) {
+        this.desiredAmountOfNumberCharacters = desiredAmountOfNumberCharacters;
     }
 }

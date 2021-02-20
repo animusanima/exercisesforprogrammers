@@ -35,8 +35,8 @@ public class PasswordServiceTest {
     @Test(testName = "Generate each time a different password")
     public void should_generate_different_passwords() {
         service.setDesiredPasswordLength(50);
-        service.setAmountOfNumbers(10);
-        service.setNumberOfSpecialCharacters(10);
+        service.setDesiredAmountOfNumberCharacters(10);
+        service.setDesiredAmountOfSpecialCharacters(10);
 
         String generatedPassword = service.generatePassword();
         String anotherGeneratedPassword = service.generatePassword();
@@ -49,7 +49,7 @@ public class PasswordServiceTest {
     @Test(testName = "Generates desired amount of numbers")
     public void should_generate_desired_amount_of_numbers() {
         service.setDesiredPasswordLength(50);
-        service.setAmountOfNumbers(10);
+        service.setDesiredAmountOfNumberCharacters(10);
 
         String generatedPassword = service.generatePassword();
         assertThat(containsDesiredAmountOfNumbers(generatedPassword, 10)).isTrue();
@@ -58,7 +58,7 @@ public class PasswordServiceTest {
     @Test(testName = "Generates desired amount of Special Characters")
     public void should_generate_desired_amount_of_special_characters() {
         service.setDesiredPasswordLength(50);
-        service.setNumberOfSpecialCharacters(10);
+        service.setDesiredAmountOfSpecialCharacters(10);
 
         String generatedPassword = service.generatePassword();
         assertThat(containsDesiredAmountOfSpecialCharacters(generatedPassword, 10)).isTrue();

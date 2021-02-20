@@ -2,7 +2,7 @@ package enums;
 
 public enum PasswordCharacterType {
 
-    SPECIAL_CHAR_CHARACTER_TYPE(0),
+    SPECIAL_CHARACTER_TYPE(0),
     NUMBER_CHARACTER_TYPE(1),
     NORMAL_CHARACTER_TYPE(2);
 
