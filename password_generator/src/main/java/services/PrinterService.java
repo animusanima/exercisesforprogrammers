@@ -1,9 +1,10 @@
 package services;
 
 public class PrinterService implements IPrinterService {
-    public static final String MINIMUM_LENGTH_QUESTION = "What is the minimum length?";
-    public static final String SPECIAL_CHARACTER_QUESTION = "How many special characters?";
-    public static final String AMOUNT_OF_NUMBERS_QUESTION = "How many numbers?";
+    public static final String MINIMUM_LENGTH_QUESTION = "What is the minimum length? ";
+    public static final String SPECIAL_CHARACTER_QUESTION = "How many special characters? ";
+    public static final String AMOUNT_OF_NUMBERS_QUESTION = "How many numbers? ";
+    public static final String SUCCESS_MESSAGE = "Password has been generated";
 
     @Override
     public String askForMinimumLength() {

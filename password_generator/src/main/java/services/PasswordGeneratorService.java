@@ -2,6 +2,9 @@ package services;
 
 import utils.PasswordCharacterTypeRandomizer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PasswordGeneratorService implements IPasswordGeneratorService {
 
     private int desiredPasswordLength;
@@ -34,56 +37,57 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
         return generateCharactersUntilDesiredPasswordLengthIsReached();
     }
 
+    @Override
+    public List<String> generatePasswords(int amountOfPasswords) {
+        List<String> results = new ArrayList<>();
+        while (amountOfPasswords > 0) {
+            results.add(generatePassword());
+            amountOfPasswords--;
+        }
+        return results;
+    }
+
     private String generateCharactersUntilDesiredPasswordLengthIsReached() {
         StringBuilder builder = new StringBuilder();
         initializeCharacterTracker();
         while (!desiredPasswordLengthReached(builder)) {
             switch (PasswordCharacterTypeRandomizer.getRandomCharacterType()) {
                 case SPECIAL_CHARACTER_TYPE:
-                    generateUniqueSpecialCharacter(builder);
+                    if (specialCharacterTracker.canAddCharacter()) {
+                        generateSpecialCharacter(builder);
+                    }
                     break;
                 case NUMBER_CHARACTER_TYPE:
-                    generateUniqueNumberCharacter(builder);
+                    if (numberCharacterTracker.canAddCharacter()) {
+                        generateNumberCharacter(builder);
+                    }
                     break;
-                default:
-                    generateUniqueNormalCharacter(builder);
+                case NORMAL_CHARACTER_TYPE:
+                    if (normalCharacterTracker.canAddCharacter()) {
+                        generateCharacter(builder);
+                    }
                     break;
             }
         }
         return builder.toString();
     }
 
-    private void generateUniqueNormalCharacter(StringBuilder builder) {
-        if (normalCharacterTracker.canAddCharacter()) {
-            Character normalChar = generator.generateRandomCharacter();
-            while (normalCharacterTracker.characterAlreadyAdded(normalChar)) {
-                normalChar = generator.generateRandomCharacter();
-            }
-            normalCharacterTracker.trackCharacter(normalChar);
-            builder.append(normalCharacterTracker.getLastTrackedCharacter());
-        }
+    private void generateCharacter(StringBuilder builder) {
+        Character normalChar = generator.generateRandomCharacter();
+        normalCharacterTracker.trackCharacter(generator.randomlyReplaceUpperCaseVowelWithNumber(normalChar));
+        builder.append(normalCharacterTracker.getLastTrackedCharacter());
     }
 
-    private void generateUniqueSpecialCharacter(StringBuilder builder) {
-        if (specialCharacterTracker.canAddCharacter()) {
-            Character specialChar = generator.generateRandomSpecialCharacter();
-            while (specialCharacterTracker.characterAlreadyAdded(specialChar)) {
-                specialChar = generator.generateRandomSpecialCharacter();
-            }
-            specialCharacterTracker.trackCharacter(specialChar);
-            builder.append(specialCharacterTracker.getLastTrackedCharacter());
-        }
+    private void generateSpecialCharacter(StringBuilder builder) {
+        Character specialChar = generator.generateRandomSpecialCharacter();
+        specialCharacterTracker.trackCharacter(specialChar);
+        builder.append(specialCharacterTracker.getLastTrackedCharacter());
     }
 
-    private void generateUniqueNumberCharacter(StringBuilder builder) {
-        if (numberCharacterTracker.canAddCharacter()) {
-            Character numberChar = generator.generateRandomNumber();
-            while (numberCharacterTracker.characterAlreadyAdded(numberChar)) {
-                numberChar = generator.generateRandomNumber();
-            }
-            numberCharacterTracker.trackCharacter(numberChar);
-            builder.append(numberCharacterTracker.getLastTrackedCharacter());
-        }
+    private void generateNumberCharacter(StringBuilder builder) {
+        Character numberChar = generator.generateRandomNumber();
+        numberCharacterTracker.trackCharacter(numberChar);
+        builder.append(numberCharacterTracker.getLastTrackedCharacter());
     }
 
     private void initializeCharacterTracker() {

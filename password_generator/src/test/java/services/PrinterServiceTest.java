@@ -17,19 +17,17 @@ public class PrinterServiceTest {
 
     @Test(testName = "Ask user to enter minimum length")
     public void should_prompt_user_for_minimum_length() {
-        assertThat(service.askForMinimumLength()).isEqualTo("What is the minimum length?");
+        assertThat(service.askForMinimumLength()).isEqualTo("What is the minimum length? ");
     }
 
     @Test(testName = "Ask user to enter amount of special characters")
     public void should_prompt_user_for_amount_of_special_character() {
-        assertThat(service.askForAmountOfSpecialCharacters()).isEqualTo("How many special characters?");
+        assertThat(service.askForAmountOfSpecialCharacters()).isEqualTo("How many special characters? ");
     }
 
     @Test(testName = "Ask user to enter amount of number")
     public void should_prompt_user_for_amount_of_numbers() {
-        assertThat(service.askForAmountOfNumbers()).isEqualTo("How many numbers?");
+        assertThat(service.askForAmountOfNumbers()).isEqualTo("How many numbers? ");
     }
-
-
 
 }

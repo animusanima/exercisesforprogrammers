@@ -35,12 +35,13 @@ public class PasswordServiceTest {
     @Test(testName = "Generate each time a different password")
     public void should_generate_different_passwords() {
         service.setDesiredPasswordLength(50);
-        service.setDesiredAmountOfNumberCharacters(10);
-        service.setDesiredAmountOfSpecialCharacters(10);
+        service.setDesiredAmountOfNumberCharacters(6);
+        service.setDesiredAmountOfSpecialCharacters(18);
 
         String generatedPassword = service.generatePassword();
         String anotherGeneratedPassword = service.generatePassword();
         assertThat(generatedPassword).isNotEqualTo(anotherGeneratedPassword);
+
 
         System.out.println(generatedPassword);
         System.out.println(anotherGeneratedPassword);
@@ -49,19 +50,19 @@ public class PasswordServiceTest {
     @Test(testName = "Generates desired amount of numbers")
     public void should_generate_desired_amount_of_numbers() {
         service.setDesiredPasswordLength(50);
-        service.setDesiredAmountOfNumberCharacters(10);
+        service.setDesiredAmountOfNumberCharacters(11);
 
         String generatedPassword = service.generatePassword();
-        assertThat(containsDesiredAmountOfNumbers(generatedPassword, 10)).isTrue();
+        assertThat(containsDesiredAmountOfNumbers(generatedPassword, 11)).isTrue();
     }
 
     @Test(testName = "Generates desired amount of Special Characters")
     public void should_generate_desired_amount_of_special_characters() {
         service.setDesiredPasswordLength(50);
-        service.setDesiredAmountOfSpecialCharacters(10);
+        service.setDesiredAmountOfSpecialCharacters(14);
 
         String generatedPassword = service.generatePassword();
-        assertThat(containsDesiredAmountOfSpecialCharacters(generatedPassword, 10)).isTrue();
+        assertThat(containsDesiredAmountOfSpecialCharacters(generatedPassword, 14)).isTrue();
     }
 
     private boolean containsDesiredAmountOfNumbers(String password, int amountOfNumbers) {
@@ -71,7 +72,7 @@ public class PasswordServiceTest {
                 countOfNumbers++;
             }
         }
-        return countOfNumbers == amountOfNumbers;
+        return countOfNumbers >= amountOfNumbers;
     }
 
     private boolean containsDesiredAmountOfSpecialCharacters(String password, int amountOfSpecialCharacters) {

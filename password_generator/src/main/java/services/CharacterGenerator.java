@@ -1,5 +1,6 @@
 package services;
 
+import enums.PasswordCharacterType;
 import utils.PasswordCharacterUtils;
 
 import java.util.Random;
@@ -31,5 +32,10 @@ public class CharacterGenerator implements ICharacterGenerator {
     @Override
     public Character generateRandomSpecialCharacter() {
         return PasswordCharacterUtils.getRandomSpecialCharacter();
+    }
+
+    @Override
+    public Character randomlyReplaceUpperCaseVowelWithNumber(Character character) {
+        return PasswordCharacterUtils.randomlyReplaceUpperCaseVowelWithNumber(character);
     }
 }

@@ -8,4 +8,5 @@ public interface ICharacterGenerator {
     Character generateRandomLowerCaseCharacter();
     Character generateRandomUpperCaseCharacter();
     Character generateRandomSpecialCharacter();
+    Character randomlyReplaceUpperCaseVowelWithNumber(Character character);
 }
