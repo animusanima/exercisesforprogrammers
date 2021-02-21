@@ -15,7 +15,7 @@ public class PasswordGeneratorService implements IPasswordGeneratorService {
     private ICharacterTracker normalCharacterTracker;
 
     public PasswordGeneratorService() {
-        this(new SimpleCharacterGenerator());
+        this(new CharacterGenerator());
     }
 
     public PasswordGeneratorService(ICharacterGenerator generator) {

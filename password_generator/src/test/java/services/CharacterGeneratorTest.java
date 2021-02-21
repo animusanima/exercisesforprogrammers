@@ -12,7 +12,7 @@ public class CharacterGeneratorTest {
 
     @BeforeMethod
     public void init() {
-        generator = new SimpleCharacterGenerator();
+        generator = new CharacterGenerator();
     }
 
     @Test
