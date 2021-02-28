@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UserSortingService implements IUserSortingService {
+
     @Override
     public List<Map<String, String>> sortUsers(List<Map<String, String>> users, String field) {
         Comparator<Map<String, String>> comparator = Comparator.comparing(u -> u.get(field));

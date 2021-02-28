@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/password_generator/password_generator.iml" filepath="$PROJECT_DIR$/password_generator/password_generator.iml" />
       <module fileurl="file://$PROJECT_DIR$/password_strength_indicator/password_strength_indicator.iml" filepath="$PROJECT_DIR$/password_strength_indicator/password_strength_indicator.iml" />
       <module fileurl="file://$PROJECT_DIR$/password_validation/password_validation.iml" filepath="$PROJECT_DIR$/password_validation/password_validation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sorting_records/sorting_records.iml" filepath="$PROJECT_DIR$/sorting_records/sorting_records.iml" />
       <module fileurl="file://$PROJECT_DIR$/troubleshooting_car_issues/troubleshooting_car_issues.iml" filepath="$PROJECT_DIR$/troubleshooting_car_issues/troubleshooting_car_issues.iml" />
     </modules>
   </component>
