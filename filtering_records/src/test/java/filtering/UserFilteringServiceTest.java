@@ -121,6 +121,18 @@ public class UserFilteringServiceTest {
         assertThat(result.size()).isEqualTo(fourEntries);
     }
 
+    @Test
+    public void emptyUsersReturnsEmptyList() {
+        assertThat(service.filterUsers(Collections.emptyList(), null)).isEmpty();
+        assertThat(service.filterUsers(Collections.emptyList(), null, (Predicate<Map<String, String>>[]) null)).isEmpty();
+    }
+
+    @Test
+    public void nullUsersReturnsEmptyList() {
+        assertThat(service.filterUsers(null, null)).isEmpty();
+        assertThat(service.filterUsers(null, null, (Predicate<Map<String, String>>[]) null)).isEmpty();
+    }
+
     private void sortUsersByFirstName(List<Map<String, String>> result) {
         result.sort(Comparator.comparing(u -> u.get("first")));
     }
