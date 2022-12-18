@@ -6,13 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="sorting_records" />
+        <module name="password_generator" />
+        <module name="filtering_records" />
         <module name="password_validation" />
         <module name="troubleshooting_car_issues" />
+        <module name="password_strength_indicator" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="filtering_records" target="1.8" />
+      <module name="password_generator" target="1.8" />
+      <module name="password_strength_indicator" target="1.8" />
       <module name="password_validation" target="1.8" />
-      <module name="troubleshooting_car_issues" target="8" />
+      <module name="sorting_records" target="1.8" />
+      <module name="troubleshooting_car_issues" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

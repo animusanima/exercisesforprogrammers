@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/SimpleMath/SimpleMath.iml" filepath="$PROJECT_DIR$/SimpleMath/SimpleMath.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tipcalculator/Tipcalculator.iml" filepath="$PROJECT_DIR$/Tipcalculator/Tipcalculator.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/exercisesforprogrammers.iml" filepath="$PROJECT_DIR$/.idea/exercisesforprogrammers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/filtering_records/filtering_records.iml" filepath="$PROJECT_DIR$/filtering_records/filtering_records.iml" />
       <module fileurl="file://$PROJECT_DIR$/password_generator/password_generator.iml" filepath="$PROJECT_DIR$/password_generator/password_generator.iml" />
       <module fileurl="file://$PROJECT_DIR$/password_strength_indicator/password_strength_indicator.iml" filepath="$PROJECT_DIR$/password_strength_indicator/password_strength_indicator.iml" />
       <module fileurl="file://$PROJECT_DIR$/password_validation/password_validation.iml" filepath="$PROJECT_DIR$/password_validation/password_validation.iml" />
